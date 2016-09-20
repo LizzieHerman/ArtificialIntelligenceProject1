@@ -51,4 +51,14 @@ public class Graph {
     public ArrayList<Edge> getEdges(){
         return edges;
     }
+    
+    public void giveVertPossColors(int n){
+        for(Vertex v: vertices){
+            ArrayList<Integer> intArray = new ArrayList();
+            for(int i = 0; i < n; i++){
+                intArray.add(i);
+            }
+            v.setPossColors(intArray);
+        }
+    }
 }
