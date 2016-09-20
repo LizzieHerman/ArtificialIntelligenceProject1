@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphcoloring;
 
 import java.util.ArrayList;
@@ -11,7 +6,7 @@ import java.awt.Point;
 
 /**
  *
- * @author Lizzi
+ * @author Lizzie Herman
  */
 public class Graph {
     private ArrayList<Vertex> vertices;
@@ -19,11 +14,13 @@ public class Graph {
     
     public Graph(int n){
         //TO-DO make Graph
+        vertices = new ArrayList();
+        edges = new ArrayList();
         this.scatterVertices(n);
     }
     
     public void addEdge(Vertex a, Vertex b){
-        Edge e = new Edge(a,b); // i don't know what's wrong
+        Edge e = new Edge(a,b);
         edges.add(e);
         a.addEdge(b);
         b.addEdge(a);
