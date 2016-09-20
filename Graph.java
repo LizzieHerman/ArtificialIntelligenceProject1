@@ -40,7 +40,16 @@ public class Graph {
     
     public Vertex findNearestPoint(Vertex v1){
         Vertex v2 = vertices.get(0);
-        // TO-DO find nearest vertex to v1
+        double shortest = 200;
+        for(Vertex v: vertices){
+            if(v.equals(v1)) continue;
+            if(v1.getConnections().contains(v)) continue;
+            double current = v.getPoint().distance(v1.getPoint());
+            if(current < shortest){
+                shortest = current;
+                v2 = v;
+            }
+        }
         return v2;
     }
     
