@@ -65,4 +65,9 @@ public class Vertex {
         possibleColors.add(a);
         return true;
     }
+    
+    // override equals method so that it just checks whether or not vertexes are int the same position
+    public boolean equals(Vertex v){
+        return p.equals(v.getPoint());
+    }
 }
