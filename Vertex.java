@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphcoloring;
 
 import java.awt.Point;
@@ -21,6 +16,8 @@ public class Vertex {
     public Vertex(Point p1){
         p = p1;
         color = -1; // color has not been assigned
+        connections = new ArrayList();
+        possibleColors = new ArrayList();
     }
     
     public void addEdge(Vertex v){
