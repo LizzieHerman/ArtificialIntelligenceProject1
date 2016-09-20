@@ -39,7 +39,7 @@ public class Graph {
     }
     
     public Vertex findNearestPoint(Vertex v1){
-        Vertex v2 = vertices.get(0);
+        Vertex v2 = null;
         double shortest = 200;
         for(Vertex v: vertices){
             if(v.equals(v1)) continue;
@@ -50,7 +50,7 @@ public class Graph {
                 v2 = v;
             }
         }
-        return v2;
+        return v2; // returns null if no next closest
     }
     
     public ArrayList<Vertex> getVertices(){
