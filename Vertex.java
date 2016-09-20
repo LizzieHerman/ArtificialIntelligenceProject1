@@ -56,4 +56,16 @@ public class Vertex {
         }
         return false; // return whether the color was removed
     }
+    
+    public void setPossColors(ArrayList<Integer> col){
+        possibleColors = col;
+    }
+    
+    public boolean addPossColor(Integer a){
+        if( possibleColors.contains(a)){
+            return false;   // return whether color was added
+        }
+        possibleColors.add(a);
+        return true;
+    }
 }
