@@ -20,6 +20,11 @@ public class Graph {
     }
     
     public void addEdge(Vertex a, Vertex b){
+        if(a.getPoint.x>b.getPoint.x){
+            Vertex temp = new Vertex(b.getPoint);
+            b=a;
+            a=temp;
+        }
         Edge e = new Edge(a,b);
         edges.add(e);
         a.addEdge(b);

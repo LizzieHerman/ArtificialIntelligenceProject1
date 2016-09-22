@@ -14,8 +14,8 @@ public class Edge {
     private Vertex b;
     
     Edge(Vertex v1, Vertex v2){
-        a = v1;
-        b = v2;
+        a = v1; //leftmost
+        b = v2; //rightmost
     }
 
     public Vertex getFirstVert(){
@@ -26,9 +26,15 @@ public class Edge {
         return b;
     }
     
-    public boolean detectCollision( Edge e){
-        boolean collide = true;
-        // TO-DO detect to see if two edges collide
-        return collide;
+    public boolean detectCollision(ArrayList<Edge> edges){
+        for (Edge edge: edges){
+            if (a<=edge.getFirstVert&&b>=edge.getSecVert //in the intersection range
+                &&twoLinesCollision(edge))
+                return true;
+        }
+        return false; //no collision
+    }
+    private boolean twoLinesCollision(Edge e){
+        
     }
 }
