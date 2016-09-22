@@ -6,29 +6,44 @@ import java.awt.Point;
 
 /**
  *
- * @author Lizzie Herman
+ * @author Lizzie Herman and Connor O'Leary
  */
 public class Graph {
     private ArrayList<Vertex> vertices;
     private ArrayList<Edge> edges;
     
     public Graph(int n){
-        //TO-DO make Graph
         vertices = new ArrayList();
         edges = new ArrayList();
         this.scatterVertices(n);
+        for(Vertex v: vertices){ // find the connections for every vertex in graph
+            ArrayList<Vertex> collisions = new ArrayList(); // keep track of what vertices can't be connected to
+            Vertex connect = findNearestPoint(v,collisions); // find the nearest point
+            while(connect != null){ // keep finding nearest point until none left
+                boolean edgeMade = addEdge(v, connect);
+                if(!edgeMade){
+                    collisions.add(connect);
+                }
+                connect = findNearestPoint(v,collisions);
+            }
+        }
     }
     
-    public void addEdge(Vertex a, Vertex b){
-        if(a.getPoint().x>b.getPoint().x){
-            Vertex temp = new Vertex(b.getPoint());
-            b=a;
-            a=temp;
+    public boolean addEdge(Vertex a, Vertex b){
+        Edge e;
+        if(a.getPoint().x > b.getPoint().x){ //first coord needs to be leftmost
+            e = new Edge(b,a);
         }
-        Edge e = new Edge(a,b);
+        else{
+            e = new Edge(a,b);
+        }
+        if(e.detectCollision(edges)){
+            return false; // this edge could not be made
+        }
         edges.add(e);
         a.addEdge(b);
         b.addEdge(a);
+        return true; // this edge was made
     }
     
     public void scatterVertices(int n){
@@ -43,12 +58,13 @@ public class Graph {
         }
     }
     
-    public Vertex findNearestPoint(Vertex v1){
+    public Vertex findNearestPoint(Vertex v1, ArrayList<Vertex> collisions){
         Vertex v2 = null;
         double shortest = 200;
         for(Vertex v: vertices){
-            if(v.equals(v1)) continue;
-            if(v1.getConnections().contains(v)) continue;
+            if(v.equals(v1)) continue; // don't return the same vertex
+            if(v1.getConnections().contains(v)) continue; // son't return a point that has already been returned
+            if(collisions.contains(v)) continue; // don't return a point that can't be connected to
             double current = v.getPoint().distance(v1.getPoint());
             if(current < shortest){
                 shortest = current;
