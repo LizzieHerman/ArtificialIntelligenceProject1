@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package graphcoloring;
-
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
 /**
  *
  * @author Lizzie Herman
@@ -28,13 +29,16 @@ public class Edge {
     
     public boolean detectCollision(ArrayList<Edge> edges){
         for (Edge edge: edges){
-            if (a<=edge.getFirstVert&&b>=edge.getSecVert //in the intersection range
+            if (a.getPoint().x<=edge.getFirstVert().getPoint().x&&b.getPoint().x>=edge.getSecVert().getPoint().x //in the intersection range
                 &&twoLinesCollision(edge))
                 return true;
         }
         return false; //no collision
     }
     private boolean twoLinesCollision(Edge e){
-        
+        Line2D l1= new Line2D.Double(a.getPoint().x,a.getPoint().y,b.getPoint().x,b.getPoint().y);
+        Line2D l2= new Line2D.Double(e.getFirstVert().getPoint().x,e.getFirstVert().getPoint().y,
+            e.getSecVert().getPoint().x,e.getSecVert().getPoint().y);
+        return l1.intersectsLine(l2);
     }
 }
