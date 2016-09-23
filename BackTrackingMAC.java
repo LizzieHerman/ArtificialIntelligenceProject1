@@ -35,6 +35,7 @@ public class BackTrackingMAC extends Solver{
             }
             curVert.setPossColors(intArray);
         do{
+            count++;
             // check if assignment impossible
             for(Vertex v: curVert.getConnections()){ // check to see whether solution has made assignment impossible
                 if(curVert.getPossColors().contains(v.getColor())){
@@ -47,7 +48,7 @@ public class BackTrackingMAC extends Solver{
                 curVert.removePossColor(color);
                 continue;
             }
-            curVert.assignColor(color); count++;
+            curVert.assignColor(color);
             recVerts.remove(curVert);
             if(recVerts.isEmpty()){ // if there are no more vertices in the list return the current Vertex
                 retVerts = new ArrayList();
@@ -64,6 +65,7 @@ public class BackTrackingMAC extends Solver{
     }
     
     public boolean forwardCheck(ArrayList<Vertex> verts, Integer color){
+        count++;
         int n = verts.size();
         boolean a = true;
         boolean[] changedPossColor = new boolean[n]; // record whether or not the assignment changed the available colors for the neighbors
@@ -73,7 +75,7 @@ public class BackTrackingMAC extends Solver{
             i++;
             if(v.getPossColors().isEmpty()) a = false; // check to see whether solution has made an assignment impossible
         }
-        //a = MACCheck(); // added MAC checking
+        a = MACCheck(); // added MAC checking
         if(! a){ // undo change in domain if color assignment is wrong
             int j = 0;
             for(Vertex v: verts){
@@ -87,6 +89,7 @@ public class BackTrackingMAC extends Solver{
     }
     
     public boolean MACCheck(){
+        count++;
         for(Edge e: g.getEdges()){
             Vertex a = e.getFirstVert();
             Vertex b = e.getSecVert();
