@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphcoloring;
 
 import java.util.*;
 
 /**
  *
- * @author Lizzi
+ * @author Lizzie Herman
  */
 public class BackTrackingFC extends Solver{
     public Graph solve(Graph g, int k){
@@ -45,7 +40,7 @@ public class BackTrackingFC extends Solver{
             }
             if(curVert.getPossColors().isEmpty()) return null;
             Integer color = curVert.getPossColors().get(0);
-            if(forwardCheck(curVert.getConnections(), color)){ // ADDED FORWARD CHECKING
+            if(! forwardCheck(curVert.getConnections(), color)){ // ADDED FORWARD CHECKING
                 curVert.removePossColor(color);
                 continue;
             }
