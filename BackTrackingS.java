@@ -8,6 +8,7 @@ import java.util.*;
  */
 public class BackTrackingS extends Solver{
     public Graph solve(Graph g, int k){
+        count = 0;
         ArrayList<Vertex> coloredVerts = backTrack(g.getVertices(), k);
         g.setColoredVerts(coloredVerts);
         return g;
@@ -32,7 +33,7 @@ public class BackTrackingS extends Solver{
             }
             if(curVert.getPossColors().isEmpty()) return null;
             Integer color = curVert.getPossColors().get(0);
-            curVert.assignColor(color);
+            curVert.assignColor(color); count++;
             recVerts.remove(curVert);
             if(recVerts.isEmpty()){ // if there are no more vertices in the list return the current Vertex
                 retVerts = new ArrayList();
