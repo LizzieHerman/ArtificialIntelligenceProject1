@@ -7,6 +7,7 @@ import java.util.*;
  * @author Lizzie Herman
  */
 public abstract class Solver {
+    int count = 0;
     Comparator connections = new Comparator<Vertex>(){ // used to sort vertex list by highest num connections
         public int compare(Vertex v1, Vertex v2){
             if(v1.getConnections().isEmpty() && ! v2.getConnections().isEmpty()) return 1;
