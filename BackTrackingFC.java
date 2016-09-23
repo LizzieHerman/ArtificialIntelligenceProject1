@@ -45,7 +45,7 @@ public class BackTrackingFC extends Solver{
                 curVert.removePossColor(color);
                 continue;
             }
-            curVert.assignColor(color); count++;
+            curVert.assignColor(color);
             recVerts.remove(curVert);
             if(recVerts.isEmpty()){ // if there are no more vertices in the list return the current Vertex
                 retVerts = new ArrayList();
