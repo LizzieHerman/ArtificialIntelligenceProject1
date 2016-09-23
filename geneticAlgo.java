@@ -3,29 +3,33 @@ package graphcoloring;
 import java.util.Random;
 import java.util.ArrayList;
 
-public class GeneticAlgo{
+public class GeneticAlgo extends Solver{
     boolean terminate=false;
-    int popSize = 60;
+    int popSize = 100;
     int selectionSize = 10;
     int crossoverSize;
-    int mutationRate = 4; //one in n mutated
+    int mutationRate = 8; //one in n mutated
     int[] scores = new int[popSize];
     int chromeSize;
     public Graph solve(Graph g, int k){
         chromeSize=g.getVertices().size();
-        crossoverSize=chromeSize/2;
+        crossoverSize=chromeSize/3;
         //ArrayList<Vertex> coloredVerts = backTrack(g.getVertices(), k);
         ArrayList<ArrayList<Vertex>> coloredVerts = new ArrayList<ArrayList<Vertex>>();
         ArrayList<Vertex> setVerticies = g.getVertices();
         ArrayList<Vertex> parentA = new ArrayList<Vertex>();
         ArrayList<Vertex> parentB = new ArrayList<Vertex>();
         for(int i=0; i<popSize; i++){
-            coloredVerts.add(randomColoring(setVerticies,k));
+            coloredVerts.add(randomColoring(g,k));
         }
+        
         ArrayList<Vertex> chosenOne;
         for (int rounds=0; rounds<1000; rounds++){
             for(int i=0; i<popSize; i++){
                 g.setColoredVerts(coloredVerts.get(i));
+                for(int j=0; j<chromeSize; j++){
+                	g.updateConnectionColors(coloredVerts.get(i).get(j), j);
+                }
                 scores[i]=numConflicts(g);
                 if(scores[i]==0){
                     return g;
@@ -34,17 +38,20 @@ public class GeneticAlgo{
             parentA=coloredVerts.get(selection());
             parentB=coloredVerts.get(selection());
             chosenOne=crossover(parentA,parentB);
-            for (int i=0; i<popSize; i++){
+            coloredVerts.set(0,chosenOne);
+            for (int i=1; i<popSize; i++){
                 coloredVerts.set(i,mutation(chosenOne,k));
             }
         }
         g.setColoredVerts(null);
         return g;
     }
-    public ArrayList<Vertex> randomColoring(ArrayList<Vertex> colors, int k){ //TODO change connections
+    public ArrayList<Vertex> randomColoring(Graph g, int k){ //TODO change connections
+    	ArrayList<Vertex> colors=g.getVertices();
         Random randGen = new Random();
          for(int i=0; i<colors.size(); i++){
              colors.get(i).assignColor(randGen.nextInt(k));
+             
          }
          return colors;
     }
@@ -62,6 +69,7 @@ public class GeneticAlgo{
     private int selection(){
         Random randGen = new Random();
         int start=randGen.nextInt(popSize);
+        //System.out.println(start);
         int best = scores[start];
         int loc = start;
         for(int i=0; i<selectionSize;i++){

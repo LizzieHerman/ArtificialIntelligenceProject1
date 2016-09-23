@@ -10,7 +10,7 @@ public class MinConflicts extends Solver{
         g.setColoredVerts(current);
         
         int loc;
-        for (int i=0; i<1000; i++){
+        for (int i=0; i<2000; i++){
             //g.setColoredVerts(current);
             numConflicts=numConflicts(g);
             if (numConflicts==0){
@@ -20,7 +20,7 @@ public class MinConflicts extends Solver{
             g=changeVar(g, loc,k);
         }
         g.setColoredVerts(null);
-        return g;return g;
+        return g;
     }
     private Graph changeVar(Graph g, int loc, int k){
     	//System.out.println("this shit "+k);
@@ -81,14 +81,3 @@ public class MinConflicts extends Solver{
          }
          return colors;
     }
-    /*private int numConflicts(Graph g){
-        int i=0;
-        for(Edge e: g.getEdges()){
-            int a = e.getFirstVert().getColor();
-            int b = e.getSecVert().getColor();
-            if(a == b || a == -1 || b == -1)
-                i++; // sees if any edge has the same color
-        }
-        return i;
-    }*/
-}

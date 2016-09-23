@@ -95,11 +95,18 @@ public class Graph {
     public void setColoredVerts(ArrayList<Vertex> coloredVerts){
         vertices = coloredVerts;
     }
-    public void updateConnectionColors(Vertex vert){
-        connections = vert.getConnections();
+    public void updateConnectionColors(Vertex vert, int i){
+    	ArrayList<Vertex> connections = vert.getConnections();
+    	int j=0;
         for(Vertex v: connections){
-            
+            for(Vertex v2: vertices){
+            	if(v.equals(v2)){
+            		connections.set(j, v2);
+            		vert.setConnections(connections);
+            		vertices.set(i,vert);
+            	}
+            }
+            j++;
         }
-        this.setColoredVerts=
     }
 }
