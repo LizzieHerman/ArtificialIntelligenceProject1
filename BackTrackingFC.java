@@ -39,7 +39,7 @@ public class BackTrackingFC extends Solver{
                     curVert.removePossColor(v.getColor());
                 }
             }
-            if(curVert.getPossColors().isEmpty()) return null;
+            if(curVert.getPossColors().isEmpty()) return null; count++;
             Integer color = curVert.getPossColors().get(0);
             if(! forwardCheck(curVert.getConnections(), color)){ // ADDED FORWARD CHECKING
                 curVert.removePossColor(color);
@@ -62,6 +62,7 @@ public class BackTrackingFC extends Solver{
     }
     
     public boolean forwardCheck(ArrayList<Vertex> verts, Integer color){
+        count++;
         int n = verts.size();
         boolean a = true;
         boolean[] changedPossColor = new boolean[n]; // record whether or not the assignment changed the available colors for the neighbors
