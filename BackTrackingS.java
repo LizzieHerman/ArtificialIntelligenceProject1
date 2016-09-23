@@ -25,6 +25,7 @@ public class BackTrackingS extends Solver{
             }
             curVert.setPossColors(intArray);
         do{
+            count++;
             // check if assignment impossible
             for(Vertex v: curVert.getConnections()){ // check to see whether solution has made assignment impossible
                 if(curVert.getPossColors().contains(v.getColor())){
@@ -33,7 +34,7 @@ public class BackTrackingS extends Solver{
             }
             if(curVert.getPossColors().isEmpty()) return null;
             Integer color = curVert.getPossColors().get(0);
-            curVert.assignColor(color); count++;
+            curVert.assignColor(color);
             recVerts.remove(curVert);
             if(recVerts.isEmpty()){ // if there are no more vertices in the list return the current Vertex
                 retVerts = new ArrayList();
