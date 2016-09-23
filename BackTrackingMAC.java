@@ -9,6 +9,7 @@ import java.util.*;
 public class BackTrackingMAC extends Solver{
     private Graph g;
     public Graph solve(Graph graf, int k){
+        count = 0;
         g = graf;
         g.giveVertPossColors(k);
         ArrayList<Vertex> coloredVerts = backTrack(g.getVertices(), k);
@@ -46,7 +47,7 @@ public class BackTrackingMAC extends Solver{
                 curVert.removePossColor(color);
                 continue;
             }
-            curVert.assignColor(color);
+            curVert.assignColor(color); count++;
             recVerts.remove(curVert);
             if(recVerts.isEmpty()){ // if there are no more vertices in the list return the current Vertex
                 retVerts = new ArrayList();
