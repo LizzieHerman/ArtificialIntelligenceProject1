@@ -91,4 +91,8 @@ public class Graph {
             v.setPossColors(intArray);
         }
     }
+    
+    public void setColoredVerts(ArrayList<Vertex> coloredVerts){
+        vertices = coloredVerts;
+    }
 }
