@@ -1,43 +1,44 @@
 package graphcoloring;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public class GeneticAlgo{
     boolean terminate=false;
     int popSize = 60;
     int selectionSize = 10;
     int crossoverSize;
-    int mutationRate = 4 //one in n mutated
+    int mutationRate = 4; //one in n mutated
     int[] scores = new int[popSize];
     int chromeSize;
     public Graph solve(Graph g, int k){
-        chromeSize=g.getVertices.get(0).size();
+        chromeSize=g.getVertices().size();
         crossoverSize=chromeSize/2;
         //ArrayList<Vertex> coloredVerts = backTrack(g.getVertices(), k);
-        ArrayList<Vertex>[] coloredVerts = new ArrayList<Vertex>[popSize];
+        ArrayList<ArrayList<Vertex>> coloredVerts = new ArrayList<ArrayList<Vertex>>();
         ArrayList<Vertex> setVerticies = g.getVertices();
-        ArrayList<Vertex>[] parents = new ArrayList<Vertex>[2];
+        ArrayList<Vertex> parentA = new ArrayList<Vertex>();
+        ArrayList<Vertex> parentB = new ArrayList<Vertex>();
         for(int i=0; i<popSize; i++){
-            coloredVerts[i]=randomColoring(setVerticies,k+1);
+            coloredVerts.add(randomColoring(setVerticies,k+1));
         }
         ArrayList<Vertex> chosenOne;
         for (int rounds=0; rounds<1000; rounds++){
             for(int i=0; i<popSize; i++){
-                scores[i]=evaluate(g.setColoredVerts(coloredVerts[i]));
+                g.setColoredVerts(coloredVerts.get(i));
+                scores[i]=evaluate(g);
                 if(scores[i]==0){
                     return g;
                 }
             }
-            parents[0]=selection();
-            parents[1]=selection();
-            chosenOne=crossover(parents);
+            parentA=coloredVerts.get(selection());
+            parentB=coloredVerts.get(selection());
+            chosenOne=crossover(parentA,parentB);
             for (int i=0; i<popSize; i++){
-                coloredVerts[i]=mutation(chosenOne);
+                coloredVerts.set(i,mutation(chosenOne,k));
             }
         }
-
-        g.setColoredVerts(coloredVerts);
-
+        System.out.println("GA failed");
         return g;
     }
     public ArrayList<Vertex> randomColoring(ArrayList<Vertex> colors, int k){
@@ -47,7 +48,7 @@ public class GeneticAlgo{
          }
          return colors;
     }
-    @override
+    //@override
     private int evaluate(Graph g){
         int i=0;
         for(Edge e: g.getEdges()){
@@ -71,18 +72,18 @@ public class GeneticAlgo{
         }
         return loc;
     }
-    private ArrayList<Vertex> crossover(ArrayList<Vertex>[] parents){
+    private ArrayList<Vertex> crossover(ArrayList<Vertex> parentA,ArrayList<Vertex> parentB){
         Random randGen = new Random();
-        int start=randGen.nextInt(parents[0].size());
-        Vertex temp= new Vertex();
+        int start=randGen.nextInt(chromeSize);
+        Vertex temp;
         for(int i=0; i<crossoverSize;i++){
-            temp=parents[0].get((i+start)%parents[0].size());
-            parents[0].get((i+start)%parents[0].size())=parents[1].get((i+start)%parents[0].size());
-            parents[1].get((i+start)%parents[0].size())=temp;
+            temp=parentA.get((i+start)%chromeSize);
+            parentA.set((i+start)%chromeSize,parentB.get((i+start)%chromeSize));
+            parentB.set((i+start)%chromeSize,temp);
         }
-        return parents[0];
+        return parentA;
     }
-    private ArrayList<Vertex> mutation(ArrayList<Vertex> v){
+    private ArrayList<Vertex> mutation(ArrayList<Vertex> v, int k){
         Random randGen = new Random();
         for(int i=0; i<chromeSize; i++){
             if(randGen.nextInt(mutationRate+1)==0){
