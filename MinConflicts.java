@@ -19,7 +19,8 @@ public class MinConflicts extends Solver{
             loc = selectConflict(g);
             g=changeVar(g, loc,k);
         }
-        return g;
+        g.setColoredVerts(null);
+        return g;return g;
     }
     private Graph changeVar(Graph g, int loc, int k){
     	//System.out.println("this shit "+k);

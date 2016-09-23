@@ -38,6 +38,7 @@ public class GeneticAlgo{
                 coloredVerts.set(i,mutation(chosenOne,k));
             }
         }
+        g.setColoredVerts(null);
         return g;
     }
     public ArrayList<Vertex> randomColoring(ArrayList<Vertex> colors, int k){ //TODO change connections
