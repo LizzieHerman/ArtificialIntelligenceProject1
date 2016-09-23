@@ -6,16 +6,19 @@ import java.util.ArrayList;
 public class MinConflicts extends Solver{
     private int numConflicts;
     public Graph solve(Graph g, int k){
+        count=0;
         ArrayList<Vertex> current = randomColoring(g,k);
         g.setColoredVerts(current);
         
         int loc;
         for (int i=0; i<2000; i++){
+            count++;
             //g.setColoredVerts(current);
             numConflicts=numConflicts(g);
             if (numConflicts==0){
                 return g;
             }
+            count++;
             loc = selectConflict(g);
             g=changeVar(g, loc,k);
         }

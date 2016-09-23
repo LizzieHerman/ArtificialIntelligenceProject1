@@ -12,6 +12,7 @@ public class GeneticAlgo extends Solver{
     int[] scores = new int[popSize];
     int chromeSize;
     public Graph solve(Graph g, int k){
+        count=0;
         chromeSize=g.getVertices().size();
         crossoverSize=chromeSize/3;
         //ArrayList<Vertex> coloredVerts = backTrack(g.getVertices(), k);
@@ -32,19 +33,23 @@ public class GeneticAlgo extends Solver{
                 for(int j=0; j<chromeSize; j++){
                 	g.updateConnectionColors(coloredVerts.get(i).get(j), j);
                 }
+                count++;
                 scores[i]=numConflicts(g);
                 if(scores[i]==0){
                     return g;
                 }
             }
+            count++;
             if (!penalty(parentA, scores)){ //keep the same parents
             	parentA=coloredVerts.get(selection(selectionSize));
             	parentB=coloredVerts.get(selection(selectionSize));
             }
+            count++;
             chosenOne=crossover(parentA,parentB);
             coloredVerts.set(0,chosenOne);
             
             for (int i=1; i<popSize; i++){
+                count++;
                 coloredVerts.set(i,mutation(chosenOne,k));
             }
         }
