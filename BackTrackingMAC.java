@@ -19,7 +19,6 @@ public class BackTrackingMAC extends Solver{
     
     // returns either a colored list or null if failure
     public ArrayList<Vertex> backTrack(ArrayList<Vertex> recVerts, int num){
-        count++;
         ArrayList<Vertex> retVerts = new ArrayList();
         Collections.sort(recVerts, possColors);
         int a = recVerts.get(0).getConnections().size();
