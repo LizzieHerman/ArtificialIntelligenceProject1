@@ -39,7 +39,7 @@ public class GraphColoring {
                 for(int i = 10; i <= 100; i += 10){
                     Graph g = new Graph(i);
                     g = solve.solve(g, 3);
-                    System.out.print("Number of Vertices: " + i + " Number of Colors: 3 Assignment Count: " + solve.count + " Coloring: ");
+                    System.out.print("Number of Vertices: " + i + " Number of Colors: 3 Decision Count: " + solve.count + " Coloring: ");
                     if(g.getVertices() == null){
                         System.out.print("Not Possible");
                     }else{
@@ -49,7 +49,7 @@ public class GraphColoring {
                     System.out.println("\n");
                     g = new Graph(i);
                     g = solve.solve(g, 4);
-                    System.out.print("Number of Vertices: " + i + " Number of Colors: 4 Assignment Count: " + solve.count + " Coloring: ");
+                    System.out.print("Number of Vertices: " + i + " Number of Colors: 4 Decision Count: " + solve.count + " Coloring: ");
                     if(g.getVertices() == null){
                         System.out.print("Not Possible");
                     }else{
