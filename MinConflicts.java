@@ -81,3 +81,4 @@ public class MinConflicts extends Solver{
          }
          return colors;
     }
+}

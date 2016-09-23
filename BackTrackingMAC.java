@@ -10,7 +10,6 @@ public class BackTrackingMAC extends Solver{
     private Graph g;
     public Graph solve(Graph graf, int k){
         g = graf;
-        count = 0;
         g.giveVertPossColors(k);
         ArrayList<Vertex> coloredVerts = backTrack(g.getVertices(), k);
         g.setColoredVerts(coloredVerts);
