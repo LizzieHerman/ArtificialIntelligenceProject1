@@ -22,6 +22,7 @@ public class MinConflicts extends Solver{
         g.setColoredVerts(null);
         return g;
     }
+    
     private Graph changeVar(Graph g, int loc, int k){
     	//System.out.println("this shit "+k);
         int[] arr = new int[k];
@@ -38,8 +39,12 @@ public class MinConflicts extends Solver{
         }
         verticies.get(loc).assignColor(newColor);
         g.setColoredVerts(verticies);
+        for(int j=0; j<verticies.size(); j++){
+        	g.updateConnectionColors(verticies.get(j), j);
+        }
         return g;
     }
+
     private int selectConflict(Graph g){
         Random randGen = new Random();
         int rounds = 0;
