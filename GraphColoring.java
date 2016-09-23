@@ -1,21 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphcoloring;
 
 /**
  *
- * @author Lizzi
+ * @author Lizzie Herman
  */
 public class GraphColoring {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        for(int i = 10; i <= 100; i += 10){
+            Graph g = new Graph(i);
+            Solver solve = new BackTrackingS(); // change this to change what algorithm using
+            g = solve.solve(g, 3);
+            System.out.println("Number of Vertices: " + i + " Number of Colors: 3");
+            if(g.getVertices() == null){
+                System.out.print("Graph could not be colored in 3 colors.");
+            }else{
+                if(solve.evaluate(g)) System.out.print("The Graph was colored correctly.");
+                else System.out.print("The algorithm did not work properly.");
+            }
+            System.out.println();
+            g = new Graph(i);
+            g = solve.solve(g, 4);
+            System.out.println("Number of Vertices: " + i + " Number of Colors: 4");
+            if(g.getVertices() == null){
+                System.out.print("Graph could not be colored in 4 colors.");
+            }else{
+                if(solve.evaluate(g)) System.out.print("The Graph was colored correctly.");
+                else System.out.print("The algorithm did not work properly.");
+            }
+            System.out.println();
+        }
     }
-    
 }
