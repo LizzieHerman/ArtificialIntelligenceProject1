@@ -20,13 +20,13 @@ public class GeneticAlgo{
         ArrayList<Vertex> parentA = new ArrayList<Vertex>();
         ArrayList<Vertex> parentB = new ArrayList<Vertex>();
         for(int i=0; i<popSize; i++){
-            coloredVerts.add(randomColoring(setVerticies,k+1));
+            coloredVerts.add(randomColoring(setVerticies,k));
         }
         ArrayList<Vertex> chosenOne;
         for (int rounds=0; rounds<1000; rounds++){
             for(int i=0; i<popSize; i++){
                 g.setColoredVerts(coloredVerts.get(i));
-                scores[i]=evaluate(g);
+                scores[i]=numConflicts(g);
                 if(scores[i]==0){
                     return g;
                 }
@@ -38,26 +38,25 @@ public class GeneticAlgo{
                 coloredVerts.set(i,mutation(chosenOne,k));
             }
         }
-        System.out.println("GA failed");
         return g;
     }
-    public ArrayList<Vertex> randomColoring(ArrayList<Vertex> colors, int k){
+    public ArrayList<Vertex> randomColoring(ArrayList<Vertex> colors, int k){ //TODO change connections
         Random randGen = new Random();
          for(int i=0; i<colors.size(); i++){
              colors.get(i).assignColor(randGen.nextInt(k));
          }
          return colors;
     }
-    //@override
-    private int evaluate(Graph g){
+    
+    public int numConflicts(Graph g){
         int i=0;
-        for(Edge e: g.getEdges()){
-            int a = e.getFirstVert().getColor();
-            int b = e.getSecVert().getColor();
-            if(a == b || a == -1 || b == -1)
-                i++;; // sees if any edge has the same color
+        for(Vertex v: g.getVertices()){
+            for (Vertex v2:v.getConnections()){ //TODO
+                if(v.getColor() == v2.getColor())
+                    i++; // sees if any edge has the same color
+            }
         }
-        return i;
+        return i/2;
     }
     private int selection(){
         Random randGen = new Random();

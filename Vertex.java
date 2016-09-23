@@ -37,6 +37,10 @@ public class Vertex {
     public ArrayList<Vertex> getConnections(){
         return connections;
     }
+
+    public void setConnections(ArrayList<Vertex> connect){
+        connections=connect;
+    }
     
     public int getColor(){
         return color;
