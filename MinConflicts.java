@@ -3,10 +3,10 @@ package graphcoloring;
 import java.util.Random;
 import java.util.ArrayList;
 
-public class MinConflicts{
+public class MinConflicts extends Solver{
     private int numConflicts;
     public Graph solve(Graph g, int k){
-        ArrayList<Vertex> current = randomColoring(g.getVertices(),k);
+        ArrayList<Vertex> current = randomColoring(g,k);
         g.setColoredVerts(current);
         
         int loc;
@@ -22,6 +22,7 @@ public class MinConflicts{
         return g;
     }
     private Graph changeVar(Graph g, int loc, int k){
+    	//System.out.println("this shit "+k);
         int[] arr = new int[k];
         ArrayList<Vertex> verticies = g.getVertices();
         Vertex v = verticies.get(loc);
@@ -29,7 +30,7 @@ public class MinConflicts{
         for(Vertex vConnect:connect){
             arr[vConnect.getColor()]++;
         }
-        int newColor=arr[0]; //find color with least conflicts
+        int newColor=0; //find color with least conflicts
         for(int i=1; i<k; i++){
             if (arr[i]<arr[newColor])
                 newColor=i;
@@ -48,8 +49,10 @@ public class MinConflicts{
                 i++;
                 for (Vertex v2:v.getConnections()){
                     if(v.getColor() == v2.getColor()){
+                    	//System.out.println(i);
                         if(randGen.nextInt(numConflicts*2)==0){
-                            return i;
+                        	
+                            return i-1;
                         }
                     } 
                 }
@@ -68,10 +71,12 @@ public class MinConflicts{
         }
         return i/2;
     }
-    public ArrayList<Vertex> randomColoring(ArrayList<Vertex> colors, int k){ //TODO change connections
+    public ArrayList<Vertex> randomColoring(Graph g, int k){ //TODO change connections
+    	ArrayList<Vertex> colors=g.getVertices();
         Random randGen = new Random();
          for(int i=0; i<colors.size(); i++){
              colors.get(i).assignColor(randGen.nextInt(k));
+             
          }
          return colors;
     }
