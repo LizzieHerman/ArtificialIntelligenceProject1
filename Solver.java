@@ -30,7 +30,7 @@ public abstract class Solver {
         for(Edge e: g.getEdges()){
             int a = e.getFirstVert().getColor();
             int b = e.getSecVert().getColor();
-            if(a == b) return false; // sees if any edge has the same color
+            if(a == b || a == -1 || b == -1) return false; // sees if any edge has the same color
         }
         return true;
     }
