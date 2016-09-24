@@ -4,11 +4,81 @@ package graphcoloring;
  *
  * @author Lizzie Herman and Connor O'Leary
  */
- 
+
 import java.util.*;
+import java.io.*;
 
 public class GraphColoring {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Run Program = 0, Run Experiment = 1");
+        int num = scanner.nextInt();
+        if(num == 0){
+            consolePrintout();
+        } else {
+            System.out.print("Input number of trials you wish to do: ");
+            int numTrials = scanner.nextInt();
+            System.out.println("Input name of file you would like the data to be recorded to: ");
+            String filename = scanner.next();
+            experimenter(numTrials, filename);
+        }
+    }   
+    public static void experimenter(int numTrials, String filename){
+        FileWriter writer;
+        try {
+            writer = new FileWriter(filename);
+            writer.append("Algorithm,Size,Colors,Solution,Correct,Decisions");
+            for(int size = 10; size <= 100; size += 10){
+                for(int alg = 0; alg < 5; alg++){
+                    for(int k = 0; k < numTrials; k++){
+                        for(int color = 3; color < 5; color++){
+                            Solver solve = new MinConflicts();
+                            switch(alg){
+                                case 0:
+                                    solve = new MinConflicts();
+                                    writer.append("\nMin,");
+                                    break;
+                                case 1:
+                                    solve = new BackTrackingS();
+                                    writer.append("\nBTS,");
+                                    break;
+                                case 2:
+                                    solve = new BackTrackingFC();
+                                    writer.append("\nBFC,");
+                                    break;
+                                case 3:
+                                    solve = new BackTrackingMAC();
+                                    writer.append("\nMAC,");
+                                    break;
+                                case 4:
+                                    solve = new GeneticAlgo();
+                                    writer.append("\nGen,");
+                                    break;
+                                default:
+                                    break;
+                            }
+                            writer.append(size + "," + color + ",");
+                            Graph g = new Graph(size);
+                            g = solve.solve(g, color);
+                            if(g.getVertices() == null){
+                                writer.append("no,,");
+                            }else{
+                                writer.append("yes,");
+                                if(solve.evaluate(g)) writer.append("yes,");
+                                else writer.append("no,");
+                            }
+                            writer.append(Integer.toString(solve.count));
+                        }
+                    }
+                }
+            }
+            writer.close();
+        }catch(Exception e){
+            System.out.println("Error Occured");
+        }
+    }
+    
+    public static void consolePrintout(){
         boolean run = true;
         while(run){
             Solver solve  = new BackTrackingS();
@@ -18,6 +88,7 @@ public class GraphColoring {
             switch(number){
                 case 0:
                     solve = new MinConflicts();
+                    
                     break;
                 case 1:
                     solve = new BackTrackingS();
@@ -60,5 +131,5 @@ public class GraphColoring {
                 }
             }
         }
-    }   
+    }
 }
